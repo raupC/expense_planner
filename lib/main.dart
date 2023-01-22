@@ -17,15 +17,25 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home:  MyHomePage(title: 'Expense Planner'),
+      home: MyHomePage(title: 'Expense Planner'),
     );
   }
 }
 
 class MyHomePage extends StatelessWidget {
-   MyHomePage({super.key, required this.title});
-  
-  final List<Transaction> trasacctions = [];
+  MyHomePage({super.key, required this.title});
+
+  final List<Transaction> transactions = [
+    Transaction(
+        id: 't1', title: 'Buy soes', amount: 69.9, date: DateTime.now()),
+    Transaction(id: 't2', title: 'Buy short', amount: 6.9, date: DateTime.now()),
+    Transaction(id: 't3', title: 'Buy blanket', amount: 9.9, date: DateTime.now()),
+    Transaction(
+        id: 't4', title: 'Buy chess', amount: 63.9, date: DateTime.now()),
+    Transaction(
+        id: 't5', title: 'Buy table', amount: 34.9, date: DateTime.now()),
+    Transaction(id: 't6', title: 'Buy noora', amount: 66.9, date: DateTime.now())
+  ];
 
   final String title;
 
@@ -48,14 +58,22 @@ class MyHomePage extends StatelessWidget {
                   textAlign: TextAlign.center,
                 )),
           ),
-          Container(
-            width: double.infinity,
-            child: Card(
-              color: Colors.red,
-              child: Text("List of TX: "),
-              elevation: 5,
-            ),
-          )
+          Column( 
+              children: transactions.map(((tx) {
+            return Card(
+              child: Row(
+                children: <Widget>[
+                 
+                    Expanded(child:  Container(
+                    child: Text(tx.getString(), softWrap: true,),
+                    
+                    ),)
+                ],
+                
+              ),
+              
+            );
+          })).toList()),
         ],
       ),
     );

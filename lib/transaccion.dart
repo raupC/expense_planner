@@ -10,4 +10,8 @@ class Transaction {
     required this.amount,
     required this.date,
   });
+
+  String getString(){
+    return 'Id: $id Title:$title | Amount: $amount | Date: $date';
+  }
 }
