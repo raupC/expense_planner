@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
-
+import 'user_transaction.dart';
 
 
 class NewTransaction extends StatelessWidget {
   final titleInput = TextEditingController();
   final amountIput = TextEditingController();
+  final Function addTx;
 
-
+  NewTransaction(this.addTx);
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -31,6 +32,7 @@ class NewTransaction extends StatelessWidget {
                         onPressed: (() {
                           print(amountIput.text);
                           print(titleInput.text);
+                          this.addTx(titleInput.text, double.parse(amountIput.text));
                         }),
                         child: Text("Add Product"),
                         style: ElevatedButton.styleFrom(
