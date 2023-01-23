@@ -1,7 +1,7 @@
 // ignore_for_file: sort_child_properties_last, prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'transaccion.dart';
+import 'models/transaccion.dart';
 import 'package:intl/intl.dart';
 
 void main() {
@@ -37,6 +37,9 @@ class MyHomePage extends StatelessWidget {
 
   final String title;
 
+  final amountIput = TextEditingController();
+  final titleInput = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,59 +63,32 @@ class MyHomePage extends StatelessWidget {
             elevation: 5,
             child: Container(
               padding: EdgeInsets.all(10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
+              child: Column(crossAxisAlignment: CrossAxisAlignment.end,
                   // ignore: prefer_const_literals_to_create_immutables
                   children: <Widget>[
                     TextField(
-                      decoration:
-                          InputDecoration(labelText: "Write your name, please"),
-                    ),
+                        decoration: InputDecoration(
+                            labelText: "Name of the article, please"),
+                        controller: titleInput),
                     TextField(
-                      decoration: InputDecoration(
-                          labelText: "Write your password, please"),
+                      decoration: InputDecoration(labelText: "Amount, please"),
+                      //onChanged: (value) => print(value),
+                      controller: amountIput,
                     ),
                     ElevatedButton(
-                        onPressed: (() => print("Log in -onpressed")),
-                        child: Text("Log in"),
+                        onPressed: (() {
+                          print(amountIput.text);
+                          print(titleInput.text);
+                        }),
+                        child: Text("Add Product"),
                         style: ElevatedButton.styleFrom(
                             foregroundColor: Color.fromARGB(255, 4, 3, 3),
-                            backgroundColor: Color.fromARGB(255, 38, 176, 186))),
+                            backgroundColor:
+                                Color.fromARGB(255, 38, 176, 186))),
                   ]),
             ),
           ),
-          Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: transactions.map(((tx) {
-                return Card(
-                  color: Colors.green,
-                  child: Row(
-                    children: <Widget>[
-                      Container(
-                        margin:
-                            EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.red, width: 2)),
-                        padding: EdgeInsets.all(10),
-                        child: Text(
-                          tx.amount.toString(),
-                        ),
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            tx.title,
-                            style: TextStyle(
-                                fontSize: 15, fontWeight: FontWeight.bold),
-                          ),
-                          Text(DateFormat().format(tx.date)),
-                        ],
-                      ),
-                    ],
-                  ),
-                );
-              })).toList()),
+          
         ],
       ),
     );
