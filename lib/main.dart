@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'transaccion.dart';
+import 'package:intl/intl.dart';
 
 void main() {
   runApp(const MyApp());
@@ -28,13 +29,10 @@ class MyHomePage extends StatelessWidget {
   final List<Transaction> transactions = [
     Transaction(
         id: 't1', title: 'Buy soes', amount: 69.9, date: DateTime.now()),
-    Transaction(id: 't2', title: 'Buy short', amount: 6.9, date: DateTime.now()),
-    Transaction(id: 't3', title: 'Buy blanket', amount: 9.9, date: DateTime.now()),
     Transaction(
-        id: 't4', title: 'Buy chess', amount: 63.9, date: DateTime.now()),
+        id: 't2', title: 'Buy short', amount: 6.9, date: DateTime.now()),
     Transaction(
-        id: 't5', title: 'Buy table', amount: 34.9, date: DateTime.now()),
-    Transaction(id: 't6', title: 'Buy noora', amount: 66.9, date: DateTime.now())
+        id: 't3', title: 'Buy blanket', amount: 9.9, date: DateTime.now()),
   ];
 
   final String title;
@@ -49,31 +47,72 @@ class MyHomePage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Container(
-            width: double.infinity,
+            //width: double.infinity,
             child: Card(
                 color: Colors.blue,
                 // ignore: sized_box_for_whitespace
                 child: Text(
-                  "CHART---------",
+                  "CHART",
                   textAlign: TextAlign.center,
                 )),
           ),
-          Column( 
+          Card(
+            elevation: 5,
+            child: Container(
+              padding: EdgeInsets.all(10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                  // ignore: prefer_const_literals_to_create_immutables
+                  children: <Widget>[
+                    TextField(
+                      decoration:
+                          InputDecoration(labelText: "Write your name, please"),
+                    ),
+                    TextField(
+                      decoration: InputDecoration(
+                          labelText: "Write your password, please"),
+                    ),
+                    ElevatedButton(
+                        onPressed: (() => print("Log in -onpressed")),
+                        child: Text("Log in"),
+                        style: ElevatedButton.styleFrom(
+                            foregroundColor: Color.fromARGB(255, 4, 3, 3),
+                            backgroundColor: Color.fromARGB(255, 38, 176, 186))),
+                  ]),
+            ),
+          ),
+          Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: transactions.map(((tx) {
-            return Card(
-              child: Row(
-                children: <Widget>[
-                 
-                    Expanded(child:  Container(
-                    child: Text(tx.getString(), softWrap: true,),
-                    
-                    ),)
-                ],
-                
-              ),
-              
-            );
-          })).toList()),
+                return Card(
+                  color: Colors.green,
+                  child: Row(
+                    children: <Widget>[
+                      Container(
+                        margin:
+                            EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.red, width: 2)),
+                        padding: EdgeInsets.all(10),
+                        child: Text(
+                          tx.amount.toString(),
+                        ),
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            tx.title,
+                            style: TextStyle(
+                                fontSize: 15, fontWeight: FontWeight.bold),
+                          ),
+                          Text(DateFormat().format(tx.date)),
+                        ],
+                      ),
+                    ],
+                  ),
+                );
+              })).toList()),
         ],
       ),
     );
