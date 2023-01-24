@@ -25,7 +25,7 @@ class TransactionList extends StatelessWidget {
                       border: Border.all(color: Colors.red, width: 2)),
                   padding: EdgeInsets.all(10),
                   child: Text(
-                    transactions[index].toString(),
+                      '${transactions[index].amount.toString()}€',
                   ),
                 ),
                 Column(
@@ -44,7 +44,8 @@ class TransactionList extends StatelessWidget {
           );
           ;
         },
-        itemCount: transactions.length, //limite de elementos que queremos rederizar, sino sale error ya que hay elementos infinitos
+        itemCount: transactions
+            .length, //limite de elementos que queremos rederizar, sino sale error ya que hay elementos infinitos
       ),
     );
   }
