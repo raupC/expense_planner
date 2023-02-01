@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'models/transaccion.dart';
 import 'package:intl/intl.dart';
 import 'widgets/new_transaction.dart';
+import 'widgets/chart.dart';
 
 void main() {
   runApp(MyApp());
@@ -21,22 +22,19 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'ExpPlan',
+      title: 'NOORA',
       theme: ThemeData(
-          primarySwatch: Colors.blue,
+          primarySwatch: Colors.cyan,
           accentColor: Colors.amber,
           fontFamily: 'Quicksand',
           appBarTheme: AppBarTheme(
-              titleTextStyle: TextStyle(
-                  fontFamily: 'OpenSans',
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,   
-                  ),
-
-                  )
-          
-          ),
-      home: MyHomePage(title: 'Personal Expenses'),
+            titleTextStyle: TextStyle(
+              fontFamily: 'OpenSans',
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          )),
+      home: MyHomePage(title: 'Explan '),
     );
   }
 }
@@ -57,25 +55,44 @@ class _MyHomePageState extends State<MyHomePage> {
         builder: (_) {
           return GestureDetector(
             onTap: () {},
-            child:  NewTransaction(_addNewTransaction),
+            child: NewTransaction(_addNewTransaction),
             behavior: HitTestBehavior.opaque,
           );
         });
   }
 
   final List<Transaction> _userTransaction = [
-    
-    // Transaction(
-    //     id: 't1', title: 'New shoes', amount: 69.9, date: DateTime.now()),
-    // Transaction(
-    //     id: 't2', title: 'Buy short', amount: 6.9, date: DateTime.now()),
-    // Transaction(
-    //     id: 't3', title: 'Buy blanket', amount: 9.9, date: DateTime.now()),
+    //  Transaction(
+    //      id: 't1', title: 'New shoes', amount: 69.9, date: DateTime.now()),
+    //  Transaction(
+    //      id: 't2', title: 'Buy short', amount: 6.9, date: DateTime.now()),
+    //  Transaction(
+    // id: 't3', title: 'Buy blanket', amount: 9.9, date: DateTime.now()),
   ];
+
+   List<Transaction> get _recentTransaction{
+     return _userTransaction.where((tx){
+       return tx.date.isAfter(
+        DateTime.now().subtract(
+          Duration(days: 7),
+        ),
+       );
+     }).toList();
+   }
+
+  // List<Transaction> get _recentTransactions {
+  //   return _userTransaction.where((tx) {
+  //     return tx.date.isAfter(
+  //       DateTime.now().subtract(
+  //         Duration(days: 7),
+  //       ),
+  //     );
+  //   }).toList();
+  // }
 
   void _addNewTransaction(String title, double amoun) {
     setState(() {
-      final newTransaction = new Transaction(
+      final newTransaction = Transaction(
           id: "asd", title: title, amount: amoun, date: DateTime.now());
 
       _userTransaction.add(newTransaction);
@@ -97,16 +114,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Container(
-              //width: double.infinity,
-              child: Card(
-                  color: Theme.of(context).primaryColor,
-                  // ignore: sized_box_for_whitespace
-                  child: Text(
-                    "CHART",
-                    textAlign: TextAlign.center,
-                  )),
-            ),
+            Chart(_userTransaction),
             //NewTransaction(_addNewTransaction),
             TransactionList(_userTransaction)
           ],
