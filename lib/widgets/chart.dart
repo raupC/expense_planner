@@ -9,11 +9,11 @@ class Chart extends StatelessWidget {
   Chart(this.recentTransactions);
 
   List<Map<String, Object>>? get groupedTransactionValues {
-    return List.generate(1000, (index) {
+    return List.generate(7, (index) {
       final weekDay = DateTime.now().subtract(Duration(days: index));
       var totalSum = 0.0;
 
-      print({index.toString()});
+      //print({index.toString()});
       for (var i = 0; i < recentTransactions.length; i++) {
         if (recentTransactions[i].date.day == weekDay.day &&
             recentTransactions[i].date.month == weekDay.month &&
@@ -22,9 +22,9 @@ class Chart extends StatelessWidget {
         }
       }
 
-      print(weekDay);
-      print(DateFormat.E().format(weekDay));
-      print('total: $totalSum');
+      // print(weekDay);
+      // print(DateFormat.E().format(weekDay));
+      // print('total: $totalSum');
 
 /**
  * Suvstring devulve el intervalo de caracteres indicado
@@ -45,26 +45,26 @@ class Chart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('Total groupedTransactionValues: $groupedTransactionValues');
+    //print('Total groupedTransactionValues: $groupedTransactionValues');
     return Card(
       elevation: 6,
       margin: EdgeInsets.all(20),
       child: Container(
         padding: EdgeInsets.all(10),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: groupedTransactionValues!.map((data) {
-          return Flexible(
-            flex: 1,
-            fit: FlexFit.tight,
-            child: ChartBar(
-                data['day'] as String,
-                data['amount'] as double,
-                totalSpending == 0.0
-                    ? 0.0
-                    : (data['amount'] as double) / totalSpending),
-          );
-        }).toList()),
+              return Flexible(
+                flex: 1,
+                fit: FlexFit.tight,
+                child: ChartBar(
+                    data['day'] as String,
+                    data['amount'] as double,
+                    totalSpending == 0.0
+                        ? 0.0
+                        : (data['amount'] as double) / totalSpending),
+              );
+            }).toList()),
       ),
     );
   }
